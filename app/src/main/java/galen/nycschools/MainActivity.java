@@ -9,12 +9,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private SchoolRequestHandler requestHandler;
-    private SchoolRequestHandler.SuccessHandler successHandler = new SchoolRequestHandler.SuccessHandler() {
-        @Override
-        public void onSuccess(School[] schools) {
-            Log.d(TAG, "Got this many schools: " + schools.length);
-        }
-    };
+    private SchoolRequestHandler.SuccessHandler successHandler = schools -> Log.d(TAG, "Got this many schools: " + schools.length);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

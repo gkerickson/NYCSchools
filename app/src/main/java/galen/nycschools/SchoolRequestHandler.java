@@ -6,7 +6,6 @@ import android.util.Log;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -25,14 +24,13 @@ public class SchoolRequestHandler {
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
     RequestQueue queue;
-
     SuccessHandler successHandler;
 
-    public interface SuccessHandler {
-        public void onSuccess(School[] schools);
+    protected interface SuccessHandler {
+        void onSuccess(School[] schools);
     }
 
-    public SchoolRequestHandler(Context context) {
+    protected SchoolRequestHandler(Context context) {
         queue = Volley.newRequestQueue(context);
     }
 
@@ -53,21 +51,13 @@ public class SchoolRequestHandler {
         }
     };
 
-    private Response.Listener<String> listener = new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            Log.d(TAG, response.substring(0,500));
-        }
-    };
+    private Response.Listener<String> listener = response -> Log.d(TAG, response.substring(0,500));
 
-    private Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            if(error != null && error.networkResponse != null) {
-                Log.d(TAG, String.valueOf(error.networkResponse.statusCode));
-            } else {
-                Log.d(TAG, "NULL VALUE MYSTERY");
-            }
+    private Response.ErrorListener errorListener = error -> {
+        if(error != null && error.networkResponse != null) {
+            Log.d(TAG, String.valueOf(error.networkResponse.statusCode));
+        } else {
+            Log.d(TAG, "NULL VALUE MYSTERY");
         }
     };
 
