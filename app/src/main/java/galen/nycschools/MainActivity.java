@@ -13,7 +13,6 @@ public class MainActivity extends AppCompatActivity {
 
     private SchoolRequestHandler requestHandler;
     private SchoolRequestHandler.SuccessHandler successHandler = schools -> {
-        Log.d(TAG, "Got this many schools: " + schools.length);
         TextView mainText = findViewById(R.id.main_text);
         mainText.setText(schools[0].name);
 

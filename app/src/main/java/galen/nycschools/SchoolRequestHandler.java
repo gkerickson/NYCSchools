@@ -38,13 +38,15 @@ public class SchoolRequestHandler {
         @Override
         public void onResponse(JSONArray response) {
             int numberOfSchools = response.length();
-            numberOfSchools = Math.min(numberOfSchools, 10);
             JSONObject school;
             String schoolName;
-            School[] schools = new School[response.length()];
+            School[] schools = new School[numberOfSchools];
             for(int i = 0; i < numberOfSchools; i++) {
                 school = response.optJSONObject(i);
                 schoolName = school.optString("school_name");
+                if(schoolName == null) {
+                    Log.e(TAG, "Bad school name entry in: " + school);
+                }
                 schools[i] = new School(schoolName);
             }
             successHandler.onSuccess(schools);
@@ -62,7 +64,7 @@ public class SchoolRequestHandler {
     protected void getSchoolInfo(SuccessHandler successHandler) {
         this.successHandler = successHandler;
         JsonArrayRequest jsonRequest = new JsonArrayRequest(
-                NYC_SCHOOLS_ENDPOINT,
+                NYC_SCHOOLS_ENDPOINT + "?$query=" + SCHOOL_QUERY_STRING,
                 jsonListener,
                 errorListener
         );
