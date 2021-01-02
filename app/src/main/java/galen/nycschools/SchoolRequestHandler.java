@@ -51,8 +51,6 @@ public class SchoolRequestHandler {
         }
     };
 
-    private Response.Listener<String> listener = response -> Log.d(TAG, response.substring(0,500));
-
     private Response.ErrorListener errorListener = error -> {
         if(error != null && error.networkResponse != null) {
             Log.d(TAG, String.valueOf(error.networkResponse.statusCode));
