@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import galen.nycschools.datamodels.School;
+
 public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCardViewHolder> {
 
     private School[] schools;
@@ -23,6 +25,7 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCard
 
         public void populateCardFromSchool(School school) {
             ((TextView) schoolCard.findViewById(R.id.schoolName)).setText(school.name);
+            ((TextView) schoolCard.findViewById(R.id.schoolAttr)).setText(school.location);
             schoolCard.findViewById(R.id.recommendedView).setVisibility(
                     school.isRecommended() ? View.VISIBLE : View.INVISIBLE
             );

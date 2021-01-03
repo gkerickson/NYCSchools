@@ -1,8 +1,6 @@
 package galen.nycschools;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
@@ -10,11 +8,14 @@ import galen.nycschools.networking.SchoolRequestHandler;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-
     private final SchoolRequestHandler.SuccessHandler successHandler = schools -> {
-//        RecyclerView recyclerView = findViewById(R.id.schoolsView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-//        recyclerView.setAdapter(new SchoolAdapter(schools));
+        Bundle schoolsBundle = new Bundle();
+        schoolsBundle.putSerializable(ExploreSchoolsFragment.ARG_SCHOOLS, schools);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.app_body_container, ExploreSchoolsFragment.class, schoolsBundle)
+                .commit();
     };
 
     @Override
