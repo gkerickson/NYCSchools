@@ -1,4 +1,4 @@
-package galen.nycschools;
+package galen.nycschools.networking;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,7 +12,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import galen.nycschools.School;
+
 public class SchoolRequestHandler {
+
     private static final String TAG = "SchoolRequestHandler";
     private static final int MY_SOCKET_TIMEOUT_MS = 10000;
     private static final String NYC_SCHOOLS_ENDPOINT =
@@ -26,15 +29,15 @@ public class SchoolRequestHandler {
     RequestQueue queue;
     SuccessHandler successHandler;
 
-    protected interface SuccessHandler {
+    public interface SuccessHandler {
         void onSuccess(School[] schools);
     }
 
-    protected SchoolRequestHandler(Context context) {
+    public SchoolRequestHandler(Context context) {
         queue = Volley.newRequestQueue(context);
     }
 
-    private Response.Listener<JSONArray> jsonListener = new Response.Listener<JSONArray>() {
+    private final Response.Listener<JSONArray> jsonListener = new Response.Listener<JSONArray>() {
         @Override
         public void onResponse(JSONArray response) {
             int numberOfSchools = response.length();
@@ -44,16 +47,13 @@ public class SchoolRequestHandler {
             for(int i = 0; i < numberOfSchools; i++) {
                 school = response.optJSONObject(i);
                 schoolName = school.optString("school_name");
-                if(schoolName == null) {
-                    Log.e(TAG, "Bad school name entry in: " + school);
-                }
                 schools[i] = new School(schoolName);
             }
             successHandler.onSuccess(schools);
         }
     };
 
-    private Response.ErrorListener errorListener = error -> {
+    private final Response.ErrorListener errorListener = error -> {
         if(error != null && error.networkResponse != null) {
             Log.d(TAG, String.valueOf(error.networkResponse.statusCode));
         } else {
@@ -61,7 +61,7 @@ public class SchoolRequestHandler {
         }
     };
 
-    protected void getSchoolInfo(SuccessHandler successHandler) {
+    public void getSchoolInfo(SuccessHandler successHandler) {
         this.successHandler = successHandler;
         JsonArrayRequest jsonRequest = new JsonArrayRequest(
                 NYC_SCHOOLS_ENDPOINT + "?$query=" + SCHOOL_QUERY_STRING,

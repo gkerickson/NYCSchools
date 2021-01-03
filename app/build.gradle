@@ -29,9 +29,14 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    def fragment_version = "1.2.5"
+
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation "androidx.cardview:cardview:1.0.0"
+    implementation "androidx.fragment:fragment:$fragment_version"
+
     implementation 'com.android.volley:volley:1.1.1'
 
     implementation 'com.google.android.material:material:1.2.1'
