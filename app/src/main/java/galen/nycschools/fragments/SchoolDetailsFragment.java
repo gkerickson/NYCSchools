@@ -3,7 +3,6 @@ package galen.nycschools.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,15 +51,14 @@ public class SchoolDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_school_details, container, false);
-        SchoolCardFragment schoolCard = SchoolCardFragment.newInstance(school);
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, schoolCard)
-                .commit();
-
         ((TextView) view.findViewById(R.id.school_name)).setText(school.name);
-        ((TextView) view.findViewById(R.id.school_attr_1)).setText(school.location);
-        ((TextView) view.findViewById(R.id.school_attr_2)).setText(school.grades);
-
+        ((TextView) view.findViewById(R.id.school_detail_location)).setText(school.location);
+//        ((TextView) view.findViewById(R.id.school_detail_grades)).setText(school.grades);
+        view.findViewById(R.id.detail_nav_button).setOnClickListener(v ->
+                {
+                    getParentFragmentManager().popBackStack();
+                }
+        );
         return view;
     }
 }

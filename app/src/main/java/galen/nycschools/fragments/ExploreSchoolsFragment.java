@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import galen.nycschools.MainActivity;
 import galen.nycschools.R;
 import galen.nycschools.datamodels.SchoolGeneralInfo;
 
@@ -39,7 +40,8 @@ public class ExploreSchoolsFragment extends Fragment {
         if (getArguments() != null) {
             adapter = new SchoolAdapter(
                     (SchoolGeneralInfo[]) getArguments().getSerializable(ARG_SCHOOLS),
-                    getParentFragmentManager()
+                    getParentFragmentManager(),
+                    ((MainActivity) getActivity()).schoolRequestHandler
             );
         }
     }

@@ -7,19 +7,28 @@ import java.util.Random;
 
 public class SchoolGeneralInfo implements Serializable {
 
+    public final String dbn;
     public final String name;
     public final String location;
-    public final String grades;
+    public final String graduationRate;
 
-    public SchoolGeneralInfo(@NotNull String name, @NotNull String location, @NotNull String grades) {
+    public SchoolGeneralInfo(
+            @NotNull String dbn,
+            @NotNull String name,
+            @NotNull String location,
+            @NotNull String graduationRate
+    ) {
+        this.dbn = dbn;
         this.name = name;
         this.location = location;
-        this.grades = grades;
+        this.graduationRate = graduationRate;
     }
 
-    private static final Random generator = new Random();
-
     public boolean isRecommended() {
-        return generator.nextInt(101) > 90;
+        try {
+            return Integer.parseInt(graduationRate) > 0.8;
+        } catch(Exception e){
+            return false;
+        }
     }
 }

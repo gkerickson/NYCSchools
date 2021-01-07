@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import galen.nycschools.R;
@@ -42,8 +43,9 @@ public class SchoolCardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_school_details, container, false);
         ((TextView) view.findViewById(R.id.school_name)).setText(school.name);
-        ((TextView) view.findViewById(R.id.school_attr_1)).setText(school.location);
-        ((TextView) view.findViewById(R.id.school_attr_2)).setText(school.grades);
+        ((TextView) view.findViewById(R.id.school_detail_location)).setText(school.location);
+//        ((TextView) view.findViewById(R.id.school_detail_grades)).setText(school.grades);
+
         return view;
     }
 }

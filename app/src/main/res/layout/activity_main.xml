@@ -9,7 +9,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/app_body_container"
-        android:name="galen.nycschools.LoadingFragment"
+        android:name="galen.nycschools.fragments.LoadingFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:backgroundTint="#932121"
