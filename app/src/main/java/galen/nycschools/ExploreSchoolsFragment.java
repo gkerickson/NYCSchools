@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import galen.nycschools.datamodels.School;
+import galen.nycschools.datamodels.SchoolGeneralInfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,11 +22,9 @@ public class ExploreSchoolsFragment extends Fragment {
     public static final String ARG_SCHOOLS = "schools";
     private SchoolAdapter adapter;
 
-    public ExploreSchoolsFragment() {
-        // Required empty public constructor
-    }
+    public ExploreSchoolsFragment() { }
 
-    public static ExploreSchoolsFragment newInstance(School[] schools) {
+    public static ExploreSchoolsFragment newInstance(SchoolGeneralInfo[] schools) {
         ExploreSchoolsFragment fragment = new ExploreSchoolsFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_SCHOOLS, schools);
@@ -38,7 +36,10 @@ public class ExploreSchoolsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            adapter = new SchoolAdapter((School[]) getArguments().getSerializable(ARG_SCHOOLS));
+            adapter = new SchoolAdapter(
+                    (SchoolGeneralInfo[]) getArguments().getSerializable(ARG_SCHOOLS),
+                    getParentFragmentManager()
+            );
         }
     }
 

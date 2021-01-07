@@ -3,7 +3,7 @@ package galen.nycschools.networking;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import galen.nycschools.datamodels.School;
+import galen.nycschools.datamodels.SchoolGeneralInfo;
 
 final class NycOpenDataHandler {
     private NycOpenDataHandler() {}
@@ -17,13 +17,13 @@ final class NycOpenDataHandler {
     private static final String SCHOOL_QUERY_STRING = String.format("SELECT %s, %s, %s", fNAME, fLOCATION, fGRADUATION_RATE);
     static final String ALL_SCHOOLS_REQUEST = NYC_SCHOOLS_ENDPOINT + "?$query=" + SCHOOL_QUERY_STRING;
 
-    static School[] getSchoolsFromJson(JSONArray rawData) {
+    static SchoolGeneralInfo[] getSchoolsFromJson(JSONArray rawData) {
         int numberOfSchools = rawData.length();
         JSONObject school;
-        School[] schools = new School[numberOfSchools];
+        SchoolGeneralInfo[] schools = new SchoolGeneralInfo[numberOfSchools];
         for(int i = 0; i < numberOfSchools; i++) {
             school = rawData.optJSONObject(i);
-            schools[i] = new School(
+            schools[i] = new SchoolGeneralInfo(
                     school.optString(fNAME),
                     school.optString(fLOCATION),
                     school.optString(fGRADUATION_RATE)

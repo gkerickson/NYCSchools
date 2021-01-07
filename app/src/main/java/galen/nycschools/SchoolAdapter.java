@@ -1,18 +1,21 @@
 package galen.nycschools;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import galen.nycschools.datamodels.School;
+import galen.nycschools.datamodels.SchoolGeneralInfo;
 
 public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCardViewHolder> {
-
-    private School[] schools;
+    private static final String TAG = "SchoolAdapter";
+    private final SchoolGeneralInfo[] schools;
+    private final FragmentManager manager;
 
     public static class SchoolCardViewHolder extends RecyclerView.ViewHolder {
         public final View schoolCard;
@@ -23,7 +26,7 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCard
             this.schoolCard = itemView;
         }
 
-        public void populateCardFromSchool(School school) {
+        public void populateCardFromSchool(SchoolGeneralInfo school) {
             ((TextView) schoolCard.findViewById(R.id.schoolName)).setText(school.name);
             ((TextView) schoolCard.findViewById(R.id.schoolAttr)).setText(school.location);
             schoolCard.findViewById(R.id.recommendedView).setVisibility(
@@ -32,8 +35,9 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCard
         }
     }
 
-    public SchoolAdapter(School[] schools) {
+    public SchoolAdapter(SchoolGeneralInfo[] schools, FragmentManager manager) {
         this.schools = schools;
+        this.manager = manager;
     }
 
     @NonNull
@@ -46,6 +50,16 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCard
     @Override
     public void onBindViewHolder(@NonNull SchoolAdapter.SchoolCardViewHolder holder, int position) {
         holder.populateCardFromSchool(schools[position]);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(SchoolDetailsFragment.ARG_SCHOOL, schools[position]);
+        holder.itemView.setOnClickListener(
+                v -> manager
+                        .beginTransaction()
+                        .setReorderingAllowed(true)
+                        .addToBackStack(null)
+                        .add(R.id.app_body_container, SchoolDetailsFragment.class, bundle)
+                        .commit()
+        );
     }
 
     @Override

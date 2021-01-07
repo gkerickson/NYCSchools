@@ -11,7 +11,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 
-import galen.nycschools.datamodels.School;
+import galen.nycschools.datamodels.SchoolGeneralInfo;
 
 import static galen.nycschools.networking.NycOpenDataHandler.ALL_SCHOOLS_REQUEST;
 
@@ -28,7 +28,7 @@ public class SchoolRequestHandler {
     private final RequestQueue queue;
 
     public interface SuccessHandler {
-        void onSuccess(School[] schools);
+        void onSuccess(SchoolGeneralInfo[] schools);
     }
 
     public SchoolRequestHandler(Context context) {
