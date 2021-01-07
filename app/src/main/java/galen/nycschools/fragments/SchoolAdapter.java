@@ -1,4 +1,4 @@
-package galen.nycschools;
+package galen.nycschools.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import galen.nycschools.R;
 import galen.nycschools.datamodels.SchoolGeneralInfo;
 
 public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCardViewHolder> {

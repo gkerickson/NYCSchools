@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import galen.nycschools.fragments.ExploreSchoolsFragment;
 import galen.nycschools.networking.SchoolRequestHandler;
 
 public class MainActivity extends AppCompatActivity {

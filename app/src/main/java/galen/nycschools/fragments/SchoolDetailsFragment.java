@@ -1,4 +1,4 @@
-package galen.nycschools;
+package galen.nycschools.fragments;
 
 import android.os.Bundle;
 
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import galen.nycschools.R;
 import galen.nycschools.datamodels.SchoolGeneralInfo;
 
 /**
