@@ -1,6 +1,5 @@
 package galen.nycschools.fragments;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Objects;
-
-import galen.nycschools.MainActivity;
 import galen.nycschools.R;
 import galen.nycschools.datamodels.SchoolGeneralInfo;
-import galen.nycschools.networking.SchoolRequestHandler;
 
 public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCardViewHolder> {
     private static final String TAG = "SchoolAdapter";
-    private final SchoolGeneralInfo[] schools;
     private final FragmentManager manager;
-    private final SchoolRequestHandler requestHandler;
+    private final SchoolGeneralInfo[] schools;
 
     public static class SchoolCardViewHolder extends RecyclerView.ViewHolder {
         public final View schoolCard;
@@ -41,10 +35,9 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCard
         }
     }
 
-    public SchoolAdapter(SchoolGeneralInfo[] schools, FragmentManager manager, SchoolRequestHandler requestHandler) {
-        this.schools = schools;
+    public SchoolAdapter(FragmentManager manager, SchoolGeneralInfo[] schools) {
         this.manager = manager;
-        this.requestHandler = requestHandler;
+        this.schools = schools;
     }
 
     @NonNull
@@ -57,22 +50,20 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCard
     @Override
     public void onBindViewHolder(@NonNull SchoolAdapter.SchoolCardViewHolder holder, int position) {
         holder.populateCardFromSchool(schools[position]);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(SchoolDetailsFragment.ARG_SCHOOL, schools[position]);
         holder.itemView.setOnClickListener(
                 v -> {
                     manager.beginTransaction()
                             .add(R.id.app_body_container, LoadingFragment.class, null)
                             .commit();
 
-                    requestHandler.getSchoolDetails(schools[position], response -> {
-                        manager.beginTransaction()
-                                .remove(Objects.requireNonNull(manager.findFragmentById(R.id.app_body_container)))
-                                .setReorderingAllowed(true)
-                                .addToBackStack(null)
-                                .add(R.id.app_body_container, SchoolDetailsFragment.class, bundle)
-                                .commit();
-                    });
+//                    model.getSelectedSchool().observe((LifecycleOwner) v, o -> {
+//                        manager.beginTransaction()
+//                                .remove(Objects.requireNonNull(manager.findFragmentById(R.id.app_body_container)))
+//                                .setReorderingAllowed(true)
+//                                .addToBackStack(null)
+//                                .add(R.id.app_body_container, SchoolDetailsFragment.class, null)
+//                                .commit();
+//                    });
                 }
         );
     }

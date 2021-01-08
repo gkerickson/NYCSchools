@@ -17,13 +17,17 @@ public class SchoolRequestHandler {
 
     private static final String TAG = "SchoolRequestHandler";
 
-    private final SchoolRequestQueue queue;
-    private final ConcurrentHashMap<String, SchoolDetailsRequestCoordinator> map =
-            new ConcurrentHashMap<>();
+    private static SchoolRequestHandler instance;
+    private static SchoolRequestQueue queue;
+    private final ConcurrentHashMap<String, SchoolDetailsRequestCoordinator> map = new ConcurrentHashMap<>();
 
-    public SchoolRequestHandler(Context context) {
+    private SchoolRequestHandler() { }
+
+    public static void init(Context context) {
         queue = new SchoolRequestQueue(context);
     }
+
+    public static SchoolRequestHandler getInstance() { return instance; }
 
     public interface SuccessHandler<T> {
         void onSuccess(T schoolData);
