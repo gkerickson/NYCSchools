@@ -9,14 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import javax.inject.Inject;
+
+import galen.nycschools.NavigationManager;
 import galen.nycschools.R;
 import galen.nycschools.datamodels.SchoolGeneralInfo;
 
 public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCardViewHolder> {
     private static final String TAG = "SchoolAdapter";
-    private final FragmentManager manager;
     private final SchoolGeneralInfo[] schools;
-
+    private NavigationManager.ExploreToDetailsCallback callback;
     public static class SchoolCardViewHolder extends RecyclerView.ViewHolder {
         public final View schoolCard;
 
@@ -35,9 +37,9 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCard
         }
     }
 
-    public SchoolAdapter(FragmentManager manager, SchoolGeneralInfo[] schools) {
-        this.manager = manager;
+    public SchoolAdapter(NavigationManager.ExploreToDetailsCallback callback, SchoolGeneralInfo[] schools) {
         this.schools = schools;
+        this.callback = callback;
     }
 
     @NonNull
@@ -50,22 +52,7 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCard
     @Override
     public void onBindViewHolder(@NonNull SchoolAdapter.SchoolCardViewHolder holder, int position) {
         holder.populateCardFromSchool(schools[position]);
-        holder.itemView.setOnClickListener(
-                v -> {
-                    manager.beginTransaction()
-                            .add(R.id.app_body_container, LoadingFragment.class, null)
-                            .commit();
-
-//                    model.getSelectedSchool().observe((LifecycleOwner) v, o -> {
-//                        manager.beginTransaction()
-//                                .remove(Objects.requireNonNull(manager.findFragmentById(R.id.app_body_container)))
-//                                .setReorderingAllowed(true)
-//                                .addToBackStack(null)
-//                                .add(R.id.app_body_container, SchoolDetailsFragment.class, null)
-//                                .commit();
-//                    });
-                }
-        );
+        holder.itemView.setOnClickListener( v -> callback.navigate(position));
     }
 
     @Override

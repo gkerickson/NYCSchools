@@ -8,7 +8,7 @@ import javax.inject.Singleton
 @Singleton
 class DataModels @Inject constructor(private val requestHandler: SchoolRequestHandler) {
 
-    val selectedSchool: MutableLiveData<SchoolDetailedInfo> = MutableLiveData()
+    val selectedSchool: MutableLiveData<SchoolDetailedInfo?> = MutableLiveData()
 
     val schools: MutableLiveData<Array<SchoolGeneralInfo>> =
         MutableLiveData<Array<SchoolGeneralInfo>>().apply {
@@ -18,8 +18,14 @@ class DataModels @Inject constructor(private val requestHandler: SchoolRequestHa
         }
 
     fun setSelectSchool(index: Int) {
-        requestHandler.getSchoolDetails(schools.value?.get(index)) {
-            selectedSchool.value = it
+        if(index >= 0) {
+            requestHandler.getSchoolDetails(schools.value?.get(index)) {
+                selectedSchool.value = it
+            }
         }
+    }
+
+    fun remoteSelectedSchool() {
+        selectedSchool.value = null
     }
 }

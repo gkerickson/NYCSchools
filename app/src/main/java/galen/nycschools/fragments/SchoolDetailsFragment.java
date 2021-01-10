@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +13,17 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+import galen.nycschools.NavigationManager;
 import galen.nycschools.R;
 import galen.nycschools.datamodels.DataModels;
 import galen.nycschools.datamodels.SchoolDetailedInfo;
 
+@AndroidEntryPoint
 public class SchoolDetailsFragment extends Fragment {
 
     @Inject DataModels dataModels;
+    @Inject NavigationManager navigationManager;
 
     public SchoolDetailsFragment() { }
 
@@ -31,9 +34,7 @@ public class SchoolDetailsFragment extends Fragment {
         ((TextView) view.findViewById(R.id.school_name)).setText(info.name);
         ((TextView) view.findViewById(R.id.school_detail_location)).setText(info.location);
         view.findViewById(R.id.detail_nav_button).setOnClickListener(v ->
-                {
-                    getParentFragmentManager().popBackStack();
-                }
+                navigationManager.back(this.getParentFragmentManager())
         );
     }
 

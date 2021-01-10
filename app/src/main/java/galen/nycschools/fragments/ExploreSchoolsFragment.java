@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import galen.nycschools.NavigationManager;
 import galen.nycschools.R;
 import galen.nycschools.datamodels.DataModels;
 
@@ -25,8 +26,8 @@ import galen.nycschools.datamodels.DataModels;
 public class ExploreSchoolsFragment extends Fragment {
     public ExploreSchoolsFragment() { }
 
-    @Inject
-    DataModels dataModels;
+    @Inject DataModels dataModels;
+    @Inject NavigationManager navigationManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,11 @@ public class ExploreSchoolsFragment extends Fragment {
 
         RecyclerView recyclerView = exploreView.findViewById(R.id.schoolsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.setAdapter(new SchoolAdapter(getParentFragmentManager(), dataModels.getSchools().getValue()));
+        recyclerView.setAdapter(
+                new SchoolAdapter(
+                        navigationManager.exploreToDetailsCallbackFactory(getParentFragmentManager()),
+                        dataModels.getSchools().getValue())
+        );
 
         return exploreView;
     }
