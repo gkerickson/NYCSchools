@@ -8,26 +8,27 @@ import com.android.volley.toolbox.JsonArrayRequest;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import dagger.hilt.android.qualifiers.ApplicationContext;
 import galen.nycschools.datamodels.SchoolDetailedInfo;
 import galen.nycschools.datamodels.SchoolGeneralInfo;
 
 import static galen.nycschools.networking.NycSchoolDataHandler.ALL_SCHOOLS_REQUEST;
 
+@Singleton
 public class SchoolRequestHandler {
 
     private static final String TAG = "SchoolRequestHandler";
 
-    private static SchoolRequestHandler instance;
     private static SchoolRequestQueue queue;
     private final ConcurrentHashMap<String, SchoolDetailsRequestCoordinator> map = new ConcurrentHashMap<>();
 
-    private SchoolRequestHandler() { }
-
-    public static void init(Context context) {
+    @Inject
+    public SchoolRequestHandler(@ApplicationContext Context context) {
         queue = new SchoolRequestQueue(context);
     }
-
-    public static SchoolRequestHandler getInstance() { return instance; }
 
     public interface SuccessHandler<T> {
         void onSuccess(T schoolData);

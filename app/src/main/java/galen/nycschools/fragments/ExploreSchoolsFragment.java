@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import galen.nycschools.R;
 import galen.nycschools.datamodels.DataModels;
 
@@ -18,8 +21,12 @@ import galen.nycschools.datamodels.DataModels;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 public class ExploreSchoolsFragment extends Fragment {
     public ExploreSchoolsFragment() { }
+
+    @Inject
+    DataModels dataModels;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +40,7 @@ public class ExploreSchoolsFragment extends Fragment {
 
         RecyclerView recyclerView = exploreView.findViewById(R.id.schoolsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.setAdapter(new SchoolAdapter(getParentFragmentManager(), DataModels.INSTANCE.getSchools().getValue()));
+        recyclerView.setAdapter(new SchoolAdapter(getParentFragmentManager(), dataModels.getSchools().getValue()));
 
         return exploreView;
     }
