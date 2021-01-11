@@ -18,3 +18,14 @@ Create a native app to provide information on NYC High schools.
 
 **Bonus**
 - Unit Tests
+
+### Dev Note
+Wrapping up development for now. For a proper user experience I would have liked to include:
+- explanation of the value add in an intro / walk-through so that the user knows what a "thumbs up" means
+- filtering on the main menu so that the list of schools isn't quite as heavy
+- transparency around schools that don't get the "thumbs up", want to make sure we separate the schools
+we know about and the ones we just don't have enough info on
+- unit tests, so the user always gets what the user wants
+
+Used java for the first half then I switched to Kotlin so there's a mix of both in there.
+
