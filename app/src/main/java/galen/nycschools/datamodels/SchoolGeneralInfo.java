@@ -15,20 +15,12 @@ public class SchoolGeneralInfo implements Serializable {
     public SchoolGeneralInfo(
             @NotNull String dbn,
             @NotNull String name,
-            @NotNull String location,
-            @NotNull String graduationRate
+            String location,
+            String graduationRate
     ) {
         this.dbn = dbn;
         this.name = name;
         this.location = location;
         this.graduationRate = graduationRate;
-    }
-
-    public boolean isRecommended() {
-        try {
-            return Integer.parseInt(graduationRate) > 0.8;
-        } catch(Exception e){
-            return false;
-        }
     }
 }

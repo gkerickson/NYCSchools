@@ -6,14 +6,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import javax.inject.Inject;
 
 import galen.nycschools.NavigationManager;
 import galen.nycschools.R;
 import galen.nycschools.datamodels.SchoolGeneralInfo;
+import galen.nycschools.fancybusinesslogic.SchoolAnalyzer;
 
 public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCardViewHolder> {
     private static final String TAG = "SchoolAdapter";
@@ -32,7 +30,7 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCard
             ((TextView) schoolCard.findViewById(R.id.schoolName)).setText(school.name);
             ((TextView) schoolCard.findViewById(R.id.schoolAttr)).setText(school.location);
             schoolCard.findViewById(R.id.recommendedView).setVisibility(
-                    school.isRecommended() ? View.VISIBLE : View.INVISIBLE
+                    SchoolAnalyzer.INSTANCE.isRecommended(school) ? View.VISIBLE : View.INVISIBLE
             );
         }
     }

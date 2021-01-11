@@ -29,6 +29,7 @@ import static galen.nycschools.networking.NycSchoolDataHandler.fWRITING;
 class SchoolDetailsRequestCoordinator {
     private final SchoolRequestQueue queue;
 
+    // TODO: Replace lock with threadsafe container for info
     // Lock is used to insure access to schoolDataFound, satDataFound, and SchoolDetailedInfo is
     // threadsafe. Do not access or change these values without ensuring thread safety.
     private final Lock lock = new ReentrantLock();
@@ -49,7 +50,12 @@ class SchoolDetailsRequestCoordinator {
     }
 
     private void addSchoolData(JSONObject school) {
-        info.grades = school.optString(fGRADES);
+        String grades = school.optString(fGRADES);
+        if(grades.length() > 10) {
+            grades = "Unique grades";
+        }
+
+        info.grades = grades;
         info.totalStudents = school.optString(fSTUDENTS);
         info.collegeCareerRate = school.optString(fCOLLEGE_RATE);
     }

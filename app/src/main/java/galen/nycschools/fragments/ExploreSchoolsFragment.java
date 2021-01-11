@@ -3,7 +3,6 @@ package galen.nycschools.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +15,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import galen.nycschools.NavigationManager;
 import galen.nycschools.R;
-import galen.nycschools.datamodels.DataModels;
+import galen.nycschools.StateProvider;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +25,8 @@ import galen.nycschools.datamodels.DataModels;
 public class ExploreSchoolsFragment extends Fragment {
     public ExploreSchoolsFragment() { }
 
-    @Inject DataModels dataModels;
+    @Inject
+    StateProvider stateProvider;
     @Inject NavigationManager navigationManager;
 
     @Override
@@ -44,7 +44,7 @@ public class ExploreSchoolsFragment extends Fragment {
         recyclerView.setAdapter(
                 new SchoolAdapter(
                         navigationManager.exploreToDetailsCallbackFactory(getParentFragmentManager()),
-                        dataModels.getSchools().getValue())
+                        stateProvider.getSchools().getValue())
         );
 
         return exploreView;

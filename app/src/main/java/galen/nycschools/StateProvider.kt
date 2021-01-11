@@ -1,19 +1,21 @@
-package galen.nycschools.datamodels
+package galen.nycschools
 
 import androidx.lifecycle.MutableLiveData
+import galen.nycschools.datamodels.SchoolDetailedInfo
+import galen.nycschools.datamodels.SchoolGeneralInfo
 import galen.nycschools.networking.SchoolRequestHandler
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DataModels @Inject constructor(private val requestHandler: SchoolRequestHandler) {
+class StateProvider @Inject constructor(private val requestHandler: SchoolRequestHandler) {
 
     val selectedSchool: MutableLiveData<SchoolDetailedInfo?> = MutableLiveData()
 
     val schools: MutableLiveData<Array<SchoolGeneralInfo>> =
         MutableLiveData<Array<SchoolGeneralInfo>>().apply {
-            requestHandler.getSchoolInfo {
-                this.value = it
+            requestHandler.getSchoolInfo { schools ->
+                this.value = schools
             }
         }
 
