@@ -20,9 +20,13 @@ import static galen.nycschools.networking.NycSchoolDataHandler.ALL_SCHOOLS_REQUE
 @Singleton
 public class SchoolRequestHandler {
 
+    // TODO: Maybe use dagger module to package and distribute objects in networking package
+
     private static final String TAG = "SchoolRequestHandler";
 
     private static SchoolRequestQueue queue;
+
+    // Tracks active requests to prevent duplicate calls
     private final ConcurrentHashMap<String, SchoolDetailsRequestCoordinator> map = new ConcurrentHashMap<>();
 
     @Inject
@@ -35,6 +39,7 @@ public class SchoolRequestHandler {
     }
 
     private final Response.ErrorListener errorListener = error -> {
+        // TODO: Handle network errors better
         if(error != null && error.networkResponse != null) {
             Log.d(TAG, String.valueOf(error.networkResponse.statusCode));
         }

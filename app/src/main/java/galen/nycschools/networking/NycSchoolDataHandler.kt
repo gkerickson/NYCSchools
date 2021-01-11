@@ -50,7 +50,9 @@ internal object NycSchoolDataHandler {
                         if(isEmpty()) this
                         else this.substring(0, this.indexOf('('))
                     },
-                    school.optString(fGRADUATION_RATE)
+                    school.optDouble(fGRADUATION_RATE).run {
+                        if(this.isNaN() || this > 1) -1 else (this * 100).toInt()
+                    }
             )
         }
         return schools

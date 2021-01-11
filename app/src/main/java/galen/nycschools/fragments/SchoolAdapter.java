@@ -14,9 +14,8 @@ import galen.nycschools.datamodels.SchoolGeneralInfo;
 import galen.nycschools.fancybusinesslogic.SchoolAnalyzer;
 
 public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCardViewHolder> {
-    private static final String TAG = "SchoolAdapter";
     private final SchoolGeneralInfo[] schools;
-    private NavigationManager.ExploreToDetailsCallback callback;
+    private final NavigationManager.ExploreToDetailsCallback callback;
     public static class SchoolCardViewHolder extends RecyclerView.ViewHolder {
         public final View schoolCard;
 
@@ -43,6 +42,7 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.SchoolCard
     @NonNull
     @Override
     public SchoolAdapter.SchoolCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // TODO: Investigate using fragment or widget for the school card
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.school_card, parent, false);
         return new SchoolCardViewHolder(view);
     }

@@ -5,16 +5,15 @@
     android:id="@+id/loading"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FB6D6D"
+    android:background="#FFFFFF"
     tools:context=".fragments.LoadingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/loading_fragment"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

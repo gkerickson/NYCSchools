@@ -25,8 +25,7 @@ import galen.nycschools.StateProvider;
 public class ExploreSchoolsFragment extends Fragment {
     public ExploreSchoolsFragment() { }
 
-    @Inject
-    StateProvider stateProvider;
+    @Inject StateProvider stateProvider;
     @Inject NavigationManager navigationManager;
 
     @Override

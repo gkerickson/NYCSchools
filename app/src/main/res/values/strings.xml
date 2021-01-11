@@ -1,7 +1,15 @@
 <resources>
-    <string name="app_name">NYCSchools</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="loading_fragment">Loading...</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">Explore NYC Schools</string>
+    <string name="loading_fragment">Loading…</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="thumbs_up_description">Thumbs up, would recommend</string>
+    <string name="college_career_rate_label_text">College Career Rate:</string>
+    <string name="graduation_rate_label_text">Graduation Rate:</string>
+    <string name="grades_label_text">Grades</string>
+    <string name="total_students_label_text">Total Students</string>
+    <string name="sat_test_takers_label_text">SAT Test Takers</string>
+    <string name="sat_reading_label_text">Reading</string>
+    <string name="sat_math_label_text">Math</string>
+    <string name="sat_writing_label_text">Writing</string>
+    <string name="back_button_text">BACK</string>
 </resources>

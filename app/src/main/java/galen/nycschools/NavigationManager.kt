@@ -5,6 +5,7 @@ import android.os.Looper
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.observe
 import galen.nycschools.datamodels.SchoolDetailedInfo
+import galen.nycschools.datamodels.SchoolGeneralInfo
 import galen.nycschools.fragments.ExploreSchoolsFragment
 import galen.nycschools.fragments.LoadingFragment
 import galen.nycschools.fragments.SchoolDetailsFragment
@@ -13,10 +14,15 @@ import javax.inject.Singleton
 
 @Singleton
 class NavigationManager @Inject constructor(private val stateProvider: StateProvider){
+
+    // TODO: Experiment with androidx navigation tools to replace this
+
     fun startNavigation(loadingFragment: LoadingFragment) {
         stateProvider.schools.observe(loadingFragment) {
             loadingFragment.parentFragmentManager.beginTransaction()
-                    .replace(R.id.app_body_container, ExploreSchoolsFragment())
+                    .setCustomAnimations(
+                            R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out
+                    ).replace(R.id.app_body_container, ExploreSchoolsFragment())
                     .setReorderingAllowed(true)
                     .commit()
         }
@@ -38,17 +44,18 @@ class NavigationManager @Inject constructor(private val stateProvider: StateProv
         fragmentManager.apply {
             val loadingFragment = LoadingFragment()
             beginTransaction()
-                    .add(R.id.app_body_container, loadingFragment)
+                    .setCustomAnimations(
+                            R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out
+                    )
+                    .replace(R.id.app_body_container, loadingFragment)
                     .commitNow()
 
             val loadingToDetails: () -> Unit = {
                 beginTransaction()
-                        .remove(findFragmentById(R.id.app_body_container)!!)
-                        .commitNow()
-                beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out
+                        )
                         .replace(R.id.app_body_container, SchoolDetailsFragment())
-                        .addToBackStack(null)
-                        .setReorderingAllowed(true)
                         .commit()
             }
             val requestTime = System.currentTimeMillis()
@@ -72,10 +79,13 @@ class NavigationManager @Inject constructor(private val stateProvider: StateProv
 
     fun back(fragmentManager: FragmentManager) {
         stateProvider.remoteSelectedSchool()
-        fragmentManager.popBackStack()
+        fragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.slide_out, R.anim.fade_out, R.anim.fade_in, R.anim.slide_in)
+                .replace(R.id.app_body_container, ExploreSchoolsFragment())
+                .commit()
     }
 
     companion object {
-        val LOADING_DELAY_MS = 2000
+        const val LOADING_DELAY_MS = 2000
     }
 }

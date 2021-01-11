@@ -43,10 +43,10 @@ class SchoolDetailsRequestCoordinator {
     }
 
     private void addSatData(JSONObject school) {
-        info.satMath = school.optString(fMATH);
-        info.satReading = school.optString(fREADING);
-        info.satWriting = school.optString(fWRITING);
-        info.satTestTakers = school.optString(fPARTICIPANTS);
+        info.satMath = school.optInt(fMATH);
+        info.satReading = school.optInt(fREADING);
+        info.satWriting = school.optInt(fWRITING);
+        info.satTestTakers = school.optInt(fPARTICIPANTS);
     }
 
     private void addSchoolData(JSONObject school) {
@@ -54,16 +54,21 @@ class SchoolDetailsRequestCoordinator {
         if(grades.length() > 10) {
             grades = "Unique grades";
         }
-
         info.grades = grades;
-        info.totalStudents = school.optString(fSTUDENTS);
-        info.collegeCareerRate = school.optString(fCOLLEGE_RATE);
+        info.totalStudents = school.optInt(fSTUDENTS);
+        double careerRate = school.optDouble(fCOLLEGE_RATE);
+        if(!Double.isNaN(careerRate)) {
+            info.collegeCareerRate = (int)(careerRate * 100);
+        } else {
+            info.collegeCareerRate = -1;
+        }
     }
 
     public void getSchoolDetails(SchoolGeneralInfo school, SchoolRequestHandler.SuccessHandler<SchoolDetailedInfo> handler) {
         this.info.name = school.name;
         this.info.location = school.location;
         this.info.graduationRate = school.graduationRate;
+
         String satRequest; String schoolRequest;
         try {
             satRequest = String.format("%s?dbn=%s", NYC_SAT_SCORES_ENDPOINT, school.dbn);
@@ -77,11 +82,9 @@ class SchoolDetailsRequestCoordinator {
             e.printStackTrace();
             return;
         }
-        Log.e("Coordinator", "satRequest IS " + satRequest);
         queue.add(new JsonArrayRequest(
                 satRequest,
                 response -> {
-                    Log.e("Coordinator", "RESPONSE 1 IS " + response.toString());
                     lock.lock();
                     if(response.length() > 0) {
                         addSatData(response.optJSONObject(0));
@@ -98,11 +101,9 @@ class SchoolDetailsRequestCoordinator {
                     Log.e("Coordinator", String.valueOf(error.networkResponse.statusCode));
                 }
         ));
-        Log.e("Coordinator", "schoolRequest IS " + schoolRequest);
         queue.add( new JsonArrayRequest(
                 schoolRequest,
                 response -> {
-                    Log.e("Coordinator", "RESPONSE 2 IS " + response.toString());
                     lock.lock();
                     if(response.length() > 0) {
                         addSchoolData(response.optJSONObject(0));

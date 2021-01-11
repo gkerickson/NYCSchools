@@ -14,13 +14,13 @@ class SchoolRequestQueue {
             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
-    private RequestQueue queue;
+    private final RequestQueue queue;
     public SchoolRequestQueue(Context context) {
         queue = Volley.newRequestQueue(context);
     }
 
-    public <T> Request<T> add(Request<T> request) {
+    public <T> void add(Request<T> request) {
         request.setRetryPolicy(defaultRetryPolicy);
-        return queue.add(request);
+        queue.add(request);
     }
 }
